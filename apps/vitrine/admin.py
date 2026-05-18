@@ -1,13 +1,14 @@
 from django.contrib import admin, messages
 from django.db import transaction
+from unfold.admin import ModelAdmin, TabularInline
 from .models import Reserva, ItemReserva
 
-class ItemReservaInline(admin.TabularInline):
+class ItemReservaInline(TabularInline):
     model = ItemReserva
     extra = 1
 
 @admin.register(Reserva)
-class ReservaAdmin(admin.ModelAdmin):
+class ReservaAdmin(ModelAdmin):
     list_display = ('id', 'cliente', 'status', 'data_reserva')
     inlines = [ItemReservaInline]
 
