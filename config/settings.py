@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     # Apps Locais
     'apps.core',
     'apps.estoque',
+    'apps.vitrine',
 ]
 
 AUTH_USER_MODEL = 'core.Usuario'
