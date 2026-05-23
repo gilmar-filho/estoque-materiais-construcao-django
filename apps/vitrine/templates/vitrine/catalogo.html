@@ -1,0 +1,38 @@
+<h1>Catálogo de Produtos</h1>
+
+<a href="{% url 'carrinho' %}"> Ver carrinho </a>
+
+
+{% for produto in produtos %}
+
+<div>
+  <h2>{{ produto.nome }}</h2>
+
+  <form
+    method="POST"
+    action="{% url 'adicionar_carrinho' produto.id %}"
+>
+
+    {% csrf_token %}
+
+    <p>
+        <p>Disponível: {{ produto.disponivel }}</p>
+    </p>
+
+    <input
+        type="number"
+        name="quantidade"
+        min="1"
+        max="{{ produto.disponivel }}"
+        value="1"
+    >
+
+    <button type="submit">
+        Adicionar ao carrinho
+    </button>
+
+</form>
+  </a>
+</div>
+
+{% endfor %}

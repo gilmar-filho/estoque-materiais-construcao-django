@@ -1,0 +1,21 @@
+<h1>Carrinho</h1>
+
+{% for item in produtos %}
+
+<div>
+  <h2>{{ item.produto.nome }}</h2>
+
+  <p>Quantidade: {{ item.quantidade }}</p>
+
+  <a href="{% url 'remover_carrinho' item.produto.id %}"> Remover </a>
+</div>
+
+{% empty %}
+
+<p>Carrinho vazio</p>
+
+{% endfor %} {% if produtos %}
+
+<a href="{% url 'checkout' %}"> Finalizar Reserva </a>
+
+{% endif %}
