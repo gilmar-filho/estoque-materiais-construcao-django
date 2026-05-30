@@ -2,35 +2,78 @@
 <html lang="pt-br">
   <head>
     <meta charset="UTF-8" />
+
     <title>Sistema de Estoque</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
   </head>
 
-  <body>
+  <body class="bg-gray-100">
+    {% if request.path != '/login/' and request.path != '/cadastro/' %}
+
     <nav
-      style="
-        padding: 10px;
-        border-bottom: 1px solid #ccc;
-        display: flex;
-        gap: 15px;
-      "
+      class="bg-gradient-to-r from-stone-800 via-neutral-900 to-zinc-950 border-b border-orange-500/20 shadow-2xl px-8 py-4 flex justify-between items-center"
     >
-      <a href="{% url 'catalogo' %}">Catálogo</a>
+      <div class="flex items-center gap-8">
+        <h1 class="text-2xl font-extrabold text-amber-400 tracking-wide">
+          ConstruStock
+        </h1>
 
-      <a href="{% url 'carrinho' %}">Carrinho</a>
+        <div class="flex gap-6">
+          <a
+            href="{% url 'catalogo' %}"
+            class="text-gray-200 hover:text-amber-400 font-medium transition duration-200"
+          >
+            Catálogo
+          </a>
 
-      {% if request.user.is_authenticated %}
+          <a
+            href="{% url 'carrinho' %}"
+            class="text-gray-200 hover:text-amber-400 font-medium transition duration-200"
+          >
+            Carrinho
+          </a>
+        </div>
+      </div>
 
-      <form method="POST" action="{% url 'logout' %}">
-        {% csrf_token %}
+      <div class="flex gap-4 items-center">
+        {% if request.user.is_authenticated %}
 
-        <button type="submit">Sair</button>
-      </form>
-      {% else %}
-      <a href="{% url 'login' %}">Login</a>
-      <a href="{% url 'cadastro' %}">Cadastro</a>
-      {% endif %}
+        <span class="text-orange-100 font-medium">
+          Olá, {{ request.user.username }}
+        </span>
+
+        <form method="POST" action="{% url 'logout' %}">
+          {% csrf_token %}
+
+          <button
+            type="submit"
+            class="bg-gradient-to-r from-red-500 to-orange-600 text-white px-5 py-2 rounded-xl hover:from-red-400 hover:to-orange-500 hover:shadow-lg hover:shadow-orange-500/30 transition duration-300"
+          >
+            Sair
+          </button>
+        </form>
+
+        {% else %}
+
+        <a
+          href="{% url 'login' %}"
+          class="text-amber-400 hover:text-amber-300 font-medium transition duration-200"
+        >
+          Login
+        </a>
+
+        <a
+          href="{% url 'cadastro' %}"
+          class="bg-gradient-to-r from-amber-500 to-orange-600 text-white px-5 py-2 rounded-xl hover:from-amber-400 hover:to-orange-500 transition duration-300"
+        >
+          Cadastro
+        </a>
+
+        {% endif %}
+      </div>
     </nav>
 
-    {% block content %} {% endblock %}
+    {% endif %} {% block content %} {% endblock %}
   </body>
 </html>

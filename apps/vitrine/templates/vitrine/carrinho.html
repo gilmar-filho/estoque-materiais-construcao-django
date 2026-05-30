@@ -1,23 +1,62 @@
 {% extends 'base.html' %} {% block content %}
 
-<h1>Carrinho</h1>
+<div
+  class="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-100 py-10 px-4"
+>
+  <div class="max-w-4xl mx-auto">
+    <div class="mb-10">
+      <h1 class="text-5xl font-extrabold text-stone-800 mb-3">Carrinho</h1>
 
-{% for item in produtos %}
+      <p class="text-stone-600 text-lg">
+        Revise seus materiais antes de finalizar a reserva
+      </p>
+    </div>
 
-<div>
-  <h2>{{ item.produto.nome }}</h2>
+    {% for item in produtos %}
 
-  <p>Quantidade: {{ item.quantidade }}</p>
+    <div
+      class="bg-white rounded-3xl shadow-lg border border-orange-100 p-6 mb-6 flex items-center justify-between hover:shadow-2xl hover:-translate-y-1 transition duration-300"
+    >
+      <div>
+        <h2 class="text-2xl font-bold text-stone-800 mb-2">
+          {{ item.produto.nome }}
+        </h2>
 
-  <a href="{% url 'remover_carrinho' item.produto.id %}"> Remover </a>
+        <p class="text-stone-600">
+          Quantidade:
+          <span class="font-bold text-orange-600"> {{ item.quantidade }} </span>
+        </p>
+      </div>
+
+      <a
+        href="{% url 'remover_carrinho' item.produto.id %}"
+        class="bg-gradient-to-r from-red-500 to-orange-500 text-white px-5 py-3 rounded-2xl hover:scale-105 transition duration-300 shadow-md"
+      >
+        Remover
+      </a>
+    </div>
+
+    {% empty %}
+
+    <div
+      class="bg-white rounded-3xl shadow-lg border border-orange-100 p-10 text-center"
+    >
+      <p class="text-stone-600 text-xl">Carrinho vazio</p>
+    </div>
+
+    {% endfor %} {% if produtos %}
+
+    <div class="mt-10 flex justify-end">
+      <a
+        href="{% url 'checkout' %}"
+        class="bg-gradient-to-r from-amber-500 to-orange-500 text-white px-8 py-4 rounded-2xl text-lg font-bold hover:scale-105 transition duration-300 shadow-lg"
+      >
+        Finalizar Reserva
+      </a>
+    </div>
+
+    {% endif %}
+  </div>
 </div>
 
-{% empty %}
-
-<p>Carrinho vazio</p>
-
-{% endfor %} {% if produtos %}
-
-<a href="{% url 'checkout' %}"> Finalizar Reserva </a>
-
-{% endif %} {% endblock %}
+{% endblock %}
