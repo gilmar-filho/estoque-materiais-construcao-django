@@ -1,9 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
+from django.http import JsonResponse
 from apps.estoque.models import Produto, Categoria
 from apps.vitrine.models import Reserva, ItemReserva
 from .forms import CadastroClienteForm
-from django.contrib.auth.decorators import login_required
 
 def catalogo(request):
     q = request.GET.get('q', '')
@@ -54,7 +54,6 @@ def carrinho(request):
     )
 
 
-@login_required
 def adicionar_carrinho(request, produto_id):
 
     produto = Produto.objects.get(id=produto_id)
@@ -78,9 +77,11 @@ def adicionar_carrinho(request, produto_id):
 
     request.session['carrinho'] = carrinho
 
+    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+        return JsonResponse({'ok': True})
+
     return redirect('catalogo')
 
-@login_required
 def remover_carrinho(request, produto_id):
 
     carrinho = request.session.get('carrinho', {})
@@ -96,6 +97,9 @@ def remover_carrinho(request, produto_id):
 
 
 def checkout(request):
+
+    if not request.user.is_authenticated:
+        return redirect('/login/?next=/checkout/')
 
     carrinho = request.session.get('carrinho', {})
 
@@ -148,7 +152,8 @@ def login_cliente(request):
 
             login(request, usuario)
 
-            return redirect('catalogo')
+            next_url = request.GET.get('next', '')
+            return redirect(next_url if next_url else 'catalogo')
 
         return render(request, 'vitrine/login.html', {'erro': 'Usuário ou senha inválidos.'})
 

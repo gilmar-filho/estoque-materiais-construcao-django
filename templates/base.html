@@ -75,5 +75,25 @@
     </nav>
 
     {% endif %} {% block content %} {% endblock %}
+
+    <div id="cart-toast"
+         class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50
+                bg-zinc-800 border border-amber-500/30 text-amber-100
+                px-6 py-4 rounded-2xl shadow-2xl text-sm font-semibold
+                translate-y-24 opacity-0 transition-all duration-500 pointer-events-none">
+      Item adicionado ao carrinho.
+    </div>
+    <script>
+      function showCartToast() {
+        var t = document.getElementById('cart-toast');
+        t.classList.remove('translate-y-24', 'opacity-0');
+        t.classList.add('translate-y-0', 'opacity-100');
+        clearTimeout(window._cartTimer);
+        window._cartTimer = setTimeout(function() {
+          t.classList.add('translate-y-24', 'opacity-0');
+          t.classList.remove('translate-y-0', 'opacity-100');
+        }, 3000);
+      }
+    </script>
   </body>
 </html>

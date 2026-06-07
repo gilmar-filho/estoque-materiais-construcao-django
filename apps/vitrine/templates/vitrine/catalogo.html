@@ -110,7 +110,7 @@
           <form
             method="POST"
             action="{% url 'adicionar_carrinho' produto.id %}"
-            class="space-y-4"
+            class="space-y-4 form-add-cart"
           >
             {% csrf_token %}
 
@@ -142,5 +142,20 @@
     </div>
   </div>
 </div>
+
+<script>
+  document.querySelectorAll('.form-add-cart').forEach(function(form) {
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { 'X-Requested-With': 'XMLHttpRequest' }
+      }).then(function(res) {
+        if (res.ok) showCartToast();
+      });
+    });
+  });
+</script>
 
 {% endblock %}
