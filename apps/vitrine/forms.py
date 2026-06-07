@@ -31,12 +31,16 @@ class CadastroClienteForm(UserCreationForm):
         }
 
     password1 = forms.CharField(
+        label='Senha',
+        help_text='',
         widget=forms.PasswordInput(attrs={
             'class': 'w-full px-4 py-3 border border-gray-300 rounded-lg'
         })
     )
 
     password2 = forms.CharField(
+        label='Confirmar Senha',
+        help_text='',
         widget=forms.PasswordInput(attrs={
             'class': 'w-full px-4 py-3 border border-gray-300 rounded-lg'
         })

@@ -150,6 +150,8 @@ def login_cliente(request):
 
             return redirect('catalogo')
 
+        return render(request, 'vitrine/login.html', {'erro': 'Usuário ou senha inválidos.'})
+
     return render(request, 'vitrine/login.html')
 
 
