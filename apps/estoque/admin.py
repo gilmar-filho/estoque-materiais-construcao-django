@@ -23,12 +23,19 @@ class MovimentacaoEstoqueForm(forms.ModelForm):
 class ProdutoAdmin(ModelAdmin):
     list_display = ('nome', 'categoria', 'marca', 'preco_venda', 'quantidade_fisica', 'quantidade_reservada')
     search_fields = ('nome', 'marca__nome')
+    list_filter = ('categoria', 'marca')
+    readonly_fields = ('quantidade_fisica', 'quantidade_reservada')
+    fieldsets = (
+        ('Identificação', {'fields': ('nome', 'categoria', 'marca', 'imagem_principal')}),
+        ('Preço e Estoque', {'fields': ('preco_venda', 'estoque_minimo', 'quantidade_fisica', 'quantidade_reservada')}),
+    )
 
 @admin.register(MovimentacaoEstoque)
 class MovimentacaoEstoqueAdmin(ModelAdmin):
     form = MovimentacaoEstoqueForm
-    list_display = ('tipo', 'produto', 'quantidade', 'data_movimentacao')
-    list_filter = ('tipo', 'data_movimentacao')
+    list_display = ('tipo', 'produto', 'quantidade', 'custo_unitario', 'fornecedor', 'data_movimentacao')
+    list_filter = ('tipo', 'data_movimentacao', 'produto__categoria', 'fornecedor')
+    date_hierarchy = 'data_movimentacao'
 
 @admin.register(Categoria)
 class CategoriaAdmin(ModelAdmin):
