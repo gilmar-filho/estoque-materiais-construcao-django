@@ -1,19 +1,29 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
-from apps.estoque.models import Produto
+from apps.estoque.models import Produto, Categoria
 from apps.vitrine.models import Reserva, ItemReserva
 from .forms import CadastroClienteForm
 from django.contrib.auth.decorators import login_required
 
 def catalogo(request):
+    q = request.GET.get('q', '')
+    categoria_id = request.GET.get('categoria', '')
 
     produtos = Produto.objects.all()
+
+    if q:
+        produtos = produtos.filter(nome__icontains=q)
+    if categoria_id:
+        produtos = produtos.filter(categoria_id=categoria_id)
 
     for p in produtos:
         p.disponivel = p.quantidade_fisica - p.quantidade_reservada
 
     return render(request, 'vitrine/catalogo.html', {
-        'produtos': produtos
+        'produtos': produtos,
+        'categorias': Categoria.objects.all(),
+        'q': q,
+        'categoria_selecionada': int(categoria_id) if categoria_id else None,
     })
 
 
