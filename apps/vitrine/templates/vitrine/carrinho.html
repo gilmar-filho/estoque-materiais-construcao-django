@@ -1,13 +1,13 @@
 {% extends 'base.html' %} {% block content %}
 
 <div
-  class="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-100 py-10 px-4"
+  class="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-100 dark:from-stone-900 dark:via-neutral-950 dark:to-zinc-900 py-10 px-4"
 >
   <div class="max-w-4xl mx-auto">
     <div class="mb-10">
-      <h1 class="text-5xl font-extrabold text-stone-800 mb-3">Carrinho</h1>
+      <h1 class="text-5xl font-extrabold text-stone-800 dark:text-white mb-3">Carrinho</h1>
 
-      <p class="text-stone-600 text-lg">
+      <p class="text-stone-600 dark:text-gray-300 text-lg">
         Revise seus materiais antes de finalizar a reserva
       </p>
     </div>
@@ -15,14 +15,14 @@
     {% for item in produtos %}
 
     <div
-      class="bg-white rounded-3xl shadow-lg border border-orange-100 p-6 mb-6 flex items-center justify-between hover:shadow-2xl hover:-translate-y-1 transition duration-300"
+      class="bg-white dark:bg-stone-800 rounded-3xl shadow-lg border border-orange-100 dark:border-stone-700 p-6 mb-6 flex items-center justify-between hover:shadow-2xl hover:-translate-y-1 transition duration-300"
     >
       <div>
-        <h2 class="text-2xl font-bold text-stone-800 mb-2">
+        <h2 class="text-2xl font-bold text-stone-800 dark:text-white mb-2">
           {{ item.produto.nome }}
         </h2>
 
-        <p class="text-stone-600">
+        <p class="text-stone-600 dark:text-gray-300">
           Quantidade:
           <span class="font-bold text-orange-600"> {{ item.quantidade }} </span>
         </p>
@@ -39,9 +39,9 @@
     {% empty %}
 
     <div
-      class="bg-white rounded-3xl shadow-lg border border-orange-100 p-10 text-center"
+      class="bg-white dark:bg-stone-800 rounded-3xl shadow-lg border border-orange-100 dark:border-stone-700 p-10 text-center"
     >
-      <p class="text-stone-600 text-xl">Carrinho vazio</p>
+      <p class="text-stone-600 dark:text-gray-300 text-xl">Carrinho vazio</p>
     </div>
 
     {% endfor %} {% if produtos %}

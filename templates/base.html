@@ -5,31 +5,37 @@
 
     <title>Casa Maciel</title>
 
+    <script>
+      if (localStorage.getItem('tema') !== 'light') {
+        document.documentElement.classList.add('dark');
+      }
+    </script>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>tailwind.config = { darkMode: 'class' }</script>
   </head>
 
-  <body class="bg-gray-100">
+  <body class="bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-100 dark:bg-none dark:bg-stone-950">
     {% if request.path != '/login/' and request.path != '/cadastro/' %}
 
     <nav
-      class="bg-gradient-to-r from-stone-800 via-neutral-900 to-zinc-950 border-b border-orange-500/20 shadow-2xl px-8 py-4 flex justify-between items-center"
+      class="bg-white border-b border-orange-200 shadow-sm dark:bg-gradient-to-r dark:from-stone-800 dark:via-neutral-900 dark:to-zinc-950 dark:border-orange-500/20 dark:shadow-2xl px-8 py-4 flex justify-between items-center"
     >
       <div class="flex items-center gap-8">
-        <h1 class="text-2xl font-extrabold text-amber-400 tracking-wide">
+        <h1 class="text-2xl font-extrabold text-orange-700 dark:text-amber-400 tracking-wide">
           Casa Maciel
         </h1>
 
         <div class="flex gap-6">
           <a
             href="{% url 'catalogo' %}"
-            class="text-gray-200 hover:text-amber-400 font-medium transition duration-200"
+            class="text-stone-600 hover:text-orange-600 dark:text-gray-200 dark:hover:text-amber-400 font-medium transition duration-200"
           >
             Catálogo
           </a>
 
           <a
             href="{% url 'carrinho' %}"
-            class="text-gray-200 hover:text-amber-400 font-medium transition duration-200"
+            class="text-stone-600 hover:text-orange-600 dark:text-gray-200 dark:hover:text-amber-400 font-medium transition duration-200"
           >
             Carrinho
           </a>
@@ -37,9 +43,18 @@
       </div>
 
       <div class="flex gap-4 items-center">
+        <button onclick="toggleTheme()" class="text-stone-400 hover:text-orange-600 dark:text-gray-400 dark:hover:text-amber-400 transition duration-200 p-1" title="Alternar tema">
+          <svg class="w-5 h-5 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707M17.657 17.657l-.707-.707M6.343 6.343l-.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z"/>
+          </svg>
+          <svg class="w-5 h-5 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+          </svg>
+        </button>
+
         {% if request.user.is_authenticated %}
 
-        <span class="text-orange-100 font-medium">
+        <span class="text-stone-700 dark:text-orange-100 font-medium">
           Olá, {{ request.user.username }}
         </span>
 
@@ -58,7 +73,7 @@
 
         <a
           href="{% url 'login' %}"
-          class="text-amber-400 hover:text-amber-300 font-medium transition duration-200"
+          class="text-orange-600 hover:text-orange-500 dark:text-amber-400 dark:hover:text-amber-300 font-medium transition duration-200"
         >
           Login
         </a>
@@ -76,34 +91,34 @@
 
     {% endif %} {% block content %} {% endblock %}
 
-    <footer class="bg-gradient-to-r from-stone-900 via-neutral-950 to-zinc-950 border-t border-orange-500/10 px-8 py-10 mt-auto">
-      <div class="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-3 gap-8 text-sm text-gray-400">
+    <footer class="bg-white border-t border-orange-200 dark:bg-gradient-to-r dark:from-stone-900 dark:via-neutral-950 dark:to-zinc-950 dark:border-orange-500/10 px-8 py-10 mt-auto">
+      <div class="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-3 gap-8 text-sm text-stone-500 dark:text-gray-400">
 
         <div>
-          <p class="text-amber-400 font-extrabold text-lg mb-2">Casa Maciel</p>
+          <p class="text-orange-700 dark:text-amber-400 font-extrabold text-lg mb-2">Casa Maciel</p>
           <p>Materiais de construção com qualidade e tradição.</p>
-          <p class="mt-4 text-gray-500">© 2025 Casa Maciel. Todos os direitos reservados.</p>
-          <a href="/admin/" class="inline-block mt-4 text-xs text-gray-500 hover:text-amber-400 transition duration-200">
+          <p class="mt-4 text-stone-400 dark:text-gray-500">© 2025 Casa Maciel. Todos os direitos reservados.</p>
+          <a href="/admin/" class="inline-block mt-4 text-xs text-stone-400 dark:text-gray-500 hover:text-orange-600 dark:hover:text-amber-400 transition duration-200">
             Painel Administrativo
           </a>
         </div>
 
         <div>
-          <p class="text-white font-semibold mb-3">Contato</p>
+          <p class="text-stone-800 dark:text-white font-semibold mb-3">Contato</p>
           <p>📞 (35) 93300-6293</p>
           <p class="mt-1">✉️ contato@casamaciel.com.br</p>
           <p class="mt-1">🕐 Seg–Sáb: 07h às 18h</p>
         </div>
 
         <div>
-          <p class="text-white font-semibold mb-3">Localização</p>
+          <p class="text-stone-800 dark:text-white font-semibold mb-3">Localização</p>
           <p>R. Teodureto Nascimento, 103</p>
           <p>Centro - Caxambu, MG</p>
           <a
             href="https://maps.app.goo.gl/PgB75Urg8BoFGoVu7"
             target="_blank"
             rel="noopener"
-            class="inline-block mt-3 text-amber-400 hover:text-amber-300 font-medium transition duration-200"
+            class="inline-block mt-3 text-orange-600 hover:text-orange-500 dark:text-amber-400 dark:hover:text-amber-300 font-medium transition duration-200"
           >
             Ver no Google Maps →
           </a>
@@ -120,6 +135,17 @@
       Item adicionado ao carrinho.
     </div>
     <script>
+      function toggleTheme() {
+        var html = document.documentElement;
+        if (html.classList.contains('dark')) {
+          html.classList.remove('dark');
+          localStorage.setItem('tema', 'light');
+        } else {
+          html.classList.add('dark');
+          localStorage.setItem('tema', 'dark');
+        }
+      }
+
       function showCartToast() {
         var t = document.getElementById('cart-toast');
         t.classList.remove('translate-y-24', 'opacity-0');
