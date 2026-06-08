@@ -2,6 +2,7 @@ from functools import wraps
 from django.contrib import messages
 from django.db import models, transaction
 from django.shortcuts import render, redirect, get_object_or_404
+from apps.estoque.forms import ProdutoForm
 from apps.estoque.models import Produto
 from apps.vitrine.models import Reserva
 
@@ -91,3 +92,30 @@ def gerente_cancelar_reserva(request, reserva_id):
 
     messages.success(request, f'Reserva #{reserva.id} cancelada.')
     return redirect('gerente_reservas')
+
+
+@gerente_required
+def gerente_produtos(request):
+    produtos = Produto.objects.select_related('categoria', 'marca').order_by('nome')
+    for p in produtos:
+        p.disponivel = p.quantidade_fisica - p.quantidade_reservada
+    return render(request, 'vitrine/gerente/produtos.html', {'produtos': produtos})
+
+
+@gerente_required
+def gerente_produto_form(request, produto_id=None):
+    produto = get_object_or_404(Produto, id=produto_id) if produto_id else None
+
+    if request.method == 'POST':
+        form = ProdutoForm(request.POST, request.FILES, instance=produto)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Produto salvo com sucesso.')
+            return redirect('gerente_produtos')
+    else:
+        form = ProdutoForm(instance=produto)
+
+    return render(request, 'vitrine/gerente/produto_form.html', {
+        'form': form,
+        'produto': produto,
+    })

@@ -1,0 +1,75 @@
+{% extends 'base.html' %} {% block content %}
+
+<div class="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-100 dark:from-stone-900 dark:via-neutral-950 dark:to-zinc-900 px-6 py-10">
+  <div class="max-w-5xl mx-auto">
+
+    <div class="flex items-center justify-between mb-10">
+      <div>
+        <h1 class="text-4xl font-extrabold text-stone-800 dark:text-white mb-1">Produtos</h1>
+        <p class="text-stone-500 dark:text-gray-400 text-sm">{{ produtos|length }} produto(s) cadastrado(s)</p>
+      </div>
+      <div class="flex gap-3">
+        <a href="{% url 'gerente_dashboard' %}" class="text-stone-500 dark:text-gray-400 hover:text-orange-600 dark:hover:text-amber-400 text-sm transition duration-200 self-center">← Painel</a>
+        <a href="{% url 'gerente_produto_novo' %}"
+          class="bg-gradient-to-r from-amber-500 to-orange-600 text-white px-5 py-2 rounded-xl text-sm font-semibold hover:from-amber-400 hover:to-orange-500 transition duration-300">
+          + Novo produto
+        </a>
+      </div>
+    </div>
+
+    {% if messages %}
+    <div class="mb-6 space-y-2">
+      {% for message in messages %}
+      <div class="px-5 py-3 rounded-xl text-sm font-medium bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-500/30 text-green-700 dark:text-green-400">
+        {{ message }}
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    {% if not produtos %}
+    <div class="bg-white dark:bg-stone-800 rounded-2xl border border-orange-100 dark:border-stone-700 shadow p-10 text-center">
+      <p class="text-stone-400 dark:text-gray-500">Nenhum produto cadastrado.</p>
+    </div>
+    {% else %}
+    <div class="bg-white dark:bg-stone-800 rounded-2xl border border-orange-100 dark:border-stone-700 shadow overflow-hidden">
+      <table class="w-full text-sm">
+        <thead class="bg-orange-50 dark:bg-stone-700/50 text-stone-600 dark:text-gray-300 uppercase text-xs tracking-wider">
+          <tr>
+            <th class="px-6 py-3 text-left">Produto</th>
+            <th class="px-6 py-3 text-left">Categoria</th>
+            <th class="px-6 py-3 text-left">Marca</th>
+            <th class="px-6 py-3 text-right">Preço</th>
+            <th class="px-6 py-3 text-right">Disponível</th>
+            <th class="px-6 py-3"></th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-orange-100 dark:divide-stone-700">
+          {% for produto in produtos %}
+          <tr class="hover:bg-orange-50/50 dark:hover:bg-stone-700/30 transition duration-150">
+            <td class="px-6 py-4 font-semibold text-stone-800 dark:text-white">{{ produto.nome }}</td>
+            <td class="px-6 py-4 text-stone-500 dark:text-gray-400">{{ produto.categoria.nome }}</td>
+            <td class="px-6 py-4 text-stone-500 dark:text-gray-400">{{ produto.marca.nome }}</td>
+            <td class="px-6 py-4 text-right font-semibold text-orange-600 dark:text-amber-400">R$ {{ produto.preco_venda }}</td>
+            <td class="px-6 py-4 text-right">
+              <span class="font-bold {% if produto.disponivel <= produto.estoque_minimo %}text-red-500 dark:text-red-400{% else %}text-stone-700 dark:text-gray-200{% endif %}">
+                {{ produto.disponivel }}
+              </span>
+            </td>
+            <td class="px-6 py-4 text-right">
+              <a href="{% url 'gerente_produto_editar' produto.id %}"
+                class="text-orange-600 dark:text-amber-400 hover:text-orange-500 dark:hover:text-amber-300 font-medium transition duration-200">
+                Editar
+              </a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% endif %}
+
+  </div>
+</div>
+
+{% endblock %}
