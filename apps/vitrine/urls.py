@@ -9,6 +9,9 @@ urlpatterns = [
     path('gerente/produtos/', views_gerente.gerente_produtos, name='gerente_produtos'),
     path('gerente/produtos/novo/', views_gerente.gerente_produto_form, name='gerente_produto_novo'),
     path('gerente/produtos/<int:produto_id>/editar/', views_gerente.gerente_produto_form, name='gerente_produto_editar'),
+    path('gerente/marcas/', views_gerente.gerente_marcas, name='gerente_marcas'),
+    path('gerente/categorias/', views_gerente.gerente_categorias, name='gerente_categorias'),
+    path('gerente/fornecedores/', views_gerente.gerente_fornecedores, name='gerente_fornecedores'),
 
     path('', views.catalogo, name='catalogo'),
 

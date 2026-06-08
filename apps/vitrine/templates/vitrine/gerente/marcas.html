@@ -1,0 +1,54 @@
+{% extends 'base.html' %} {% block content %}
+
+<div class="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-100 dark:from-stone-900 dark:via-neutral-950 dark:to-zinc-900 px-6 py-10">
+  <div class="max-w-2xl mx-auto">
+
+    <div class="flex items-center justify-between mb-10">
+      <h1 class="text-4xl font-extrabold text-stone-800 dark:text-white">Marcas</h1>
+      <a href="{% url 'gerente_dashboard' %}" class="text-stone-500 dark:text-gray-400 hover:text-orange-600 dark:hover:text-amber-400 text-sm transition duration-200">← Painel</a>
+    </div>
+
+    {% if messages %}
+    <div class="mb-6 space-y-2">
+      {% for message in messages %}
+      <div class="px-5 py-3 rounded-xl text-sm font-medium bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-500/30 text-green-700 dark:text-green-400">
+        {{ message }}
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    <div class="bg-white dark:bg-stone-800 rounded-2xl border border-orange-100 dark:border-stone-700 shadow p-6 mb-6">
+      <h2 class="text-sm font-semibold uppercase tracking-wider text-stone-500 dark:text-gray-400 mb-4">Nova marca</h2>
+      <form method="POST" class="flex gap-3">
+        {% csrf_token %}
+        {{ form.nome }}
+        <button type="submit"
+          class="bg-gradient-to-r from-amber-500 to-orange-600 text-white px-5 py-2.5 rounded-xl text-sm font-semibold hover:from-amber-400 hover:to-orange-500 transition duration-300 whitespace-nowrap">
+          Adicionar
+        </button>
+      </form>
+      {% if form.nome.errors %}
+      <p class="text-red-500 text-xs mt-2">{{ form.nome.errors.0 }}</p>
+      {% endif %}
+    </div>
+
+    <div class="bg-white dark:bg-stone-800 rounded-2xl border border-orange-100 dark:border-stone-700 shadow overflow-hidden">
+      <div class="px-6 py-3 bg-orange-50 dark:bg-stone-700/50 text-xs font-semibold uppercase tracking-wider text-stone-500 dark:text-gray-400">
+        {{ marcas|length }} marca(s) cadastrada(s)
+      </div>
+      {% if marcas %}
+      <ul class="divide-y divide-orange-100 dark:divide-stone-700">
+        {% for marca in marcas %}
+        <li class="px-6 py-3 text-stone-700 dark:text-gray-200 text-sm">{{ marca.nome }}</li>
+        {% endfor %}
+      </ul>
+      {% else %}
+      <p class="px-6 py-6 text-stone-400 dark:text-gray-500 text-sm">Nenhuma marca cadastrada.</p>
+      {% endif %}
+    </div>
+
+  </div>
+</div>
+
+{% endblock %}

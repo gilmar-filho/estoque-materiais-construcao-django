@@ -2,8 +2,8 @@ from functools import wraps
 from django.contrib import messages
 from django.db import models, transaction
 from django.shortcuts import render, redirect, get_object_or_404
-from apps.estoque.forms import ProdutoForm
-from apps.estoque.models import Produto
+from apps.estoque.forms import ProdutoForm, MarcaForm, CategoriaForm, FornecedorForm
+from apps.estoque.models import Produto, Marca, Categoria, Fornecedor
 from apps.vitrine.models import Reserva
 
 
@@ -118,4 +118,43 @@ def gerente_produto_form(request, produto_id=None):
     return render(request, 'vitrine/gerente/produto_form.html', {
         'form': form,
         'produto': produto,
+    })
+
+
+@gerente_required
+def gerente_marcas(request):
+    form = MarcaForm(request.POST or None)
+    if request.method == 'POST' and form.is_valid():
+        form.save()
+        messages.success(request, 'Marca cadastrada.')
+        return redirect('gerente_marcas')
+    return render(request, 'vitrine/gerente/marcas.html', {
+        'form': form,
+        'marcas': Marca.objects.order_by('nome'),
+    })
+
+
+@gerente_required
+def gerente_categorias(request):
+    form = CategoriaForm(request.POST or None)
+    if request.method == 'POST' and form.is_valid():
+        form.save()
+        messages.success(request, 'Categoria cadastrada.')
+        return redirect('gerente_categorias')
+    return render(request, 'vitrine/gerente/categorias.html', {
+        'form': form,
+        'categorias': Categoria.objects.order_by('nome'),
+    })
+
+
+@gerente_required
+def gerente_fornecedores(request):
+    form = FornecedorForm(request.POST or None)
+    if request.method == 'POST' and form.is_valid():
+        form.save()
+        messages.success(request, 'Fornecedor cadastrado.')
+        return redirect('gerente_fornecedores')
+    return render(request, 'vitrine/gerente/fornecedores.html', {
+        'form': form,
+        'fornecedores': Fornecedor.objects.order_by('nome_fantasia'),
     })
