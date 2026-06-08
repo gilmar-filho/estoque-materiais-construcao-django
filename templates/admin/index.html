@@ -1,0 +1,47 @@
+{% extends 'admin/base.html' %}
+{% load i18n %}
+
+{% block title %}{% if subtitle %}{{ subtitle }} | {% endif %}{{ title }} | {{ site_title|default:_('Django site admin') }}{% endblock %}
+
+{% block branding %}
+    {% include "unfold/helpers/site_branding.html" %}
+{% endblock %}
+
+{% block content %}
+{% if stats %}
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+
+  <div class="rounded-xl border border-red-200 bg-red-50 dark:border-red-500/20 dark:bg-red-900/10 p-5">
+    <p class="text-xs font-semibold uppercase tracking-widest text-red-500 dark:text-red-400 mb-1">Estoque Crítico</p>
+    <p class="text-4xl font-extrabold text-red-600 dark:text-red-400">{{ stats.estoque_critico }}</p>
+    <p class="text-xs text-red-400 dark:text-red-500 mt-1">produto(s) abaixo do mínimo</p>
+  </div>
+
+  <div class="rounded-xl border border-amber-200 bg-amber-50 dark:border-amber-500/20 dark:bg-amber-900/10 p-5">
+    <p class="text-xs font-semibold uppercase tracking-widest text-amber-600 dark:text-amber-400 mb-1">Reservas Pendentes</p>
+    <p class="text-4xl font-extrabold text-amber-600 dark:text-amber-400">{{ stats.reservas_pendentes }}</p>
+    <p class="text-xs text-amber-500 dark:text-amber-600 mt-1">aguardando retirada</p>
+  </div>
+
+  <div class="rounded-xl border border-green-200 bg-green-50 dark:border-green-500/20 dark:bg-green-900/10 p-5">
+    <p class="text-xs font-semibold uppercase tracking-widest text-green-600 dark:text-green-400 mb-1">Entradas no Mês</p>
+    <p class="text-4xl font-extrabold text-green-600 dark:text-green-400">{{ stats.entradas_mes }}</p>
+    <p class="text-xs text-green-500 dark:text-green-600 mt-1">movimentações de entrada</p>
+  </div>
+
+  <div class="rounded-xl border border-orange-200 bg-orange-50 dark:border-orange-500/20 dark:bg-orange-900/10 p-5">
+    <p class="text-xs font-semibold uppercase tracking-widest text-orange-600 dark:text-orange-400 mb-1">Saídas no Mês</p>
+    <p class="text-4xl font-extrabold text-orange-600 dark:text-orange-400">{{ stats.saidas_mes }}</p>
+    <p class="text-xs text-orange-500 dark:text-orange-600 mt-1">movimentações de saída/perda</p>
+  </div>
+
+</div>
+{% endif %}
+
+<div class="flex flex-col lg:flex-row lg:gap-8">
+  <div class="grow">
+    {% include "unfold/helpers/app_list_default.html" %}
+  </div>
+  {% include "unfold/helpers/history.html" %}
+</div>
+{% endblock %}

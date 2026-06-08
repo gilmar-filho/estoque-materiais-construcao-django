@@ -145,3 +145,7 @@ MEDIA_URL = '/media/'
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 LOGOUT_REDIRECT_URL = '/login/'
+
+UNFOLD = {
+    "DASHBOARD_CALLBACK": "apps.estoque.dashboard.dashboard_callback",
+}
