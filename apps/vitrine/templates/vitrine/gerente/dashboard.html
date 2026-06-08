@@ -1,0 +1,64 @@
+{% extends 'base.html' %} {% block content %}
+
+<div class="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-100 dark:from-stone-900 dark:via-neutral-950 dark:to-zinc-900 px-6 py-10">
+  <div class="max-w-5xl mx-auto">
+
+    <div class="mb-10">
+      <h1 class="text-4xl font-extrabold text-stone-800 dark:text-white mb-2">Painel do Gerente</h1>
+      <p class="text-stone-500 dark:text-gray-400">Casa Maciel Ferragens e Acessórios</p>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-12">
+
+      <div class="bg-white dark:bg-stone-800 rounded-2xl border border-orange-100 dark:border-stone-700 shadow p-6">
+        <p class="text-xs font-semibold uppercase tracking-widest text-stone-400 dark:text-gray-500 mb-1">Produtos Cadastrados</p>
+        <p class="text-4xl font-extrabold text-orange-600 dark:text-amber-400">{{ stats.total_produtos }}</p>
+      </div>
+
+      <div class="bg-white dark:bg-stone-800 rounded-2xl border border-amber-200 dark:border-amber-500/20 shadow p-6">
+        <p class="text-xs font-semibold uppercase tracking-widest text-amber-600 dark:text-amber-500 mb-1">Reservas Pendentes</p>
+        <p class="text-4xl font-extrabold text-amber-600 dark:text-amber-400">{{ stats.reservas_pendentes }}</p>
+      </div>
+
+      <div class="bg-white dark:bg-stone-800 rounded-2xl border border-red-200 dark:border-red-500/20 shadow p-6">
+        <p class="text-xs font-semibold uppercase tracking-widest text-red-500 dark:text-red-400 mb-1">Estoque Crítico</p>
+        <p class="text-4xl font-extrabold text-red-600 dark:text-red-400">{{ stats.estoque_critico }}</p>
+      </div>
+
+    </div>
+
+    <h2 class="text-lg font-bold text-stone-700 dark:text-gray-300 mb-4">Gerenciar</h2>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+
+      <a href="/gerente/reservas/" class="bg-white dark:bg-stone-800 border border-orange-100 dark:border-stone-700 rounded-2xl shadow p-6 hover:-translate-y-1 hover:shadow-orange-200 dark:hover:shadow-none transition duration-200 block">
+        <p class="text-orange-600 dark:text-amber-400 font-bold text-lg mb-1">Reservas</p>
+        <p class="text-stone-500 dark:text-gray-400 text-sm">Confirmar ou cancelar reservas dos clientes</p>
+      </a>
+
+      <a href="/gerente/produtos/" class="bg-white dark:bg-stone-800 border border-orange-100 dark:border-stone-700 rounded-2xl shadow p-6 hover:-translate-y-1 hover:shadow-orange-200 dark:hover:shadow-none transition duration-200 block">
+        <p class="text-orange-600 dark:text-amber-400 font-bold text-lg mb-1">Produtos</p>
+        <p class="text-stone-500 dark:text-gray-400 text-sm">Cadastrar e editar produtos do catálogo</p>
+      </a>
+
+      <a href="/gerente/marcas/" class="bg-white dark:bg-stone-800 border border-orange-100 dark:border-stone-700 rounded-2xl shadow p-6 hover:-translate-y-1 hover:shadow-orange-200 dark:hover:shadow-none transition duration-200 block">
+        <p class="text-orange-600 dark:text-amber-400 font-bold text-lg mb-1">Marcas</p>
+        <p class="text-stone-500 dark:text-gray-400 text-sm">Adicionar novas marcas</p>
+      </a>
+
+      <a href="/gerente/categorias/" class="bg-white dark:bg-stone-800 border border-orange-100 dark:border-stone-700 rounded-2xl shadow p-6 hover:-translate-y-1 hover:shadow-orange-200 dark:hover:shadow-none transition duration-200 block">
+        <p class="text-orange-600 dark:text-amber-400 font-bold text-lg mb-1">Categorias</p>
+        <p class="text-stone-500 dark:text-gray-400 text-sm">Adicionar novas categorias</p>
+      </a>
+
+      <a href="/gerente/fornecedores/" class="bg-white dark:bg-stone-800 border border-orange-100 dark:border-stone-700 rounded-2xl shadow p-6 hover:-translate-y-1 hover:shadow-orange-200 dark:hover:shadow-none transition duration-200 block">
+        <p class="text-orange-600 dark:text-amber-400 font-bold text-lg mb-1">Fornecedores</p>
+        <p class="text-stone-500 dark:text-gray-400 text-sm">Cadastrar fornecedores para entradas de estoque</p>
+      </a>
+
+    </div>
+
+  </div>
+</div>
+
+{% endblock %}

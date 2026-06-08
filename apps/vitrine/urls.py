@@ -1,7 +1,9 @@
 from django.urls import path
-from . import views
+from . import views, views_gerente
 
 urlpatterns = [
+    path('gerente/', views_gerente.gerente_dashboard, name='gerente_dashboard'),
+
     path('', views.catalogo, name='catalogo'),
 
     path(

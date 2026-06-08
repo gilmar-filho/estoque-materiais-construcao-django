@@ -39,6 +39,15 @@
           >
             Carrinho
           </a>
+
+          {% if request.user.is_staff %}
+          <a
+            href="{% url 'gerente_dashboard' %}"
+            class="text-stone-600 hover:text-orange-600 dark:text-gray-200 dark:hover:text-amber-400 font-medium transition duration-200"
+          >
+            Gerente
+          </a>
+          {% endif %}
         </div>
       </div>
 
